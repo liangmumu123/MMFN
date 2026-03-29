@@ -8,14 +8,13 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # 导入你的模型和数据集
-from MMFN import MultiModal
+from Core import MultiModal
 from myweibo_dataset import weibo_dataset, collate_fn, clipmodel  # 确保从 dataset 导入 clipmodel
 from torch.utils.data import DataLoader
 
 device = "cpu"
 print(f"✅ 使用设备: {device}")
 
-# 加载 MMFN 模型
 model = MultiModal()
 model.load_state_dict(torch.load("best_model.pth", map_location="cpu"))
 model.to(device)
@@ -50,11 +49,9 @@ with torch.no_grad():
         ]
 
         # 2. 【关键步骤】使用 CLIP 提取特征向量 (512维)
-        # 模型 MMFN 内部需要的是这两个向量
         clip_image_features = clipmodel.encode_image(clip_img_raw).float()  # [1, 512]
         clip_text_features = clipmodel.encode_text(clip_txt_tokens).float()  # [1, 512]
 
-        # 3. 调用 MMFN 模型
         # 注意参数对应关系：
         # model forward: (input_ids, attention_mask, token_type_ids, image_raw, text, image)
         # 我们传入：      (input_ids, att_mask,     token_type_ids, imgs,      clip_text_features, clip_image_features)

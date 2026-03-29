@@ -1,4 +1,6 @@
 import os
+os.environ["TRANSFORMERS_OFFLINE"] = "1"
+os.environ["HF_HUB_OFFLINE"] = "1"
 import torch
 import numpy as np
 from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score, f1_score, \
@@ -6,7 +8,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, r
 from transformers import logging
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
-from MMFN import MultiModal
+from Core import MultiModal
 from tqdm import tqdm
 from myweibo_dataset import *
 # from gossipcop_dataset import *
@@ -42,17 +44,19 @@ def train():
     train_loader = DataLoader(
         train_set,
         batch_size=batch_size,
-        num_workers=8,  # 加载数据时使用的子进程数
-        collate_fn=collate_fn,  # 自定义的批处理函数，用于对每个批次的数据进行预处理
-        shuffle=True  # 是否在每个 epoch 开始时打乱数据顺序
+        num_workers=0,          # 改为0，避免多进程
+        collate_fn=collate_fn,
+        shuffle=True,
+        pin_memory=False        # 可加
     )
 
     test_loader = DataLoader(
         validate_set,
         batch_size=batch_size,
-        num_workers=8,
+        num_workers=0,
         collate_fn=collate_fn,
-        shuffle=False  # 验证集不需要打乱数据顺序
+        shuffle=False,
+        pin_memory=False
     )
 
     # Initialize the MultiModal model

@@ -1,0 +1,10 @@
+transformers>=4.30.0
+pandas
+tqdm
+scikit-learn
+pillow
+opencv-python
+numpy
+ftfy
+regex
+clip
