@@ -48,7 +48,7 @@ def train():
     rumor_module.to(device)
 
     # Define the CrossEntropyLoss criterion for rumor classification
-    loss_f_rumor = torch.nn.CrossEntropyLoss(weight=torch.tensor([4.0, 1.0]).cuda())
+    loss_f_rumor = torch.nn.CrossEntropyLoss(weight=torch.tensor([6.0, 1.0]).cuda())
 
     # Extract parameters for optimizer groups
     base_params = list(map(id, rumor_module.bert.parameters()))
@@ -141,7 +141,7 @@ def to_var(x):
 def test(rumor_module, test_loader):
     rumor_module.eval()
 
-    loss_f_rumor = torch.nn.CrossEntropyLoss(weight=torch.tensor([4.0, 1.0]).cuda())
+    loss_f_rumor = torch.nn.CrossEntropyLoss(weight=torch.tensor([6.0, 1.0]).cuda())
 
     rumor_count = 0
     loss_total = 0
