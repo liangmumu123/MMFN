@@ -189,7 +189,7 @@ class UnimodalDetection(nn.Module):
 
 # Definition of the Cross-Modal model
 class CrossModule(nn.Module):
-    def __init__(
+    def __init__( 
             self,
             corre_out_dim=16):
         super(CrossModule, self).__init__()
