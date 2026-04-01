@@ -7,6 +7,7 @@ swin-base-patch4-window7-224/
 bert-base-chinese/
 bert-base-uncased/
 bert-chinese/
+.vscode/
 *.pyc
 *.pyo
 *.pyd
